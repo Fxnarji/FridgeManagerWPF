@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FridgeManagerWPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="800" Width="940" MinWidth="940">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="101*"/>
@@ -14,23 +14,19 @@
 
         <StackPanel>
             <GroupBox>
-                <Grid Margin="0,10,0,0">
+                <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="450"/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition Width="455"/>
+                        <ColumnDefinition Width="280"/>
+                        <ColumnDefinition Width="80"/>
+                        <ColumnDefinition Width="200"/>
                     </Grid.ColumnDefinitions>
-                    <Border
-                        Grid.Column="0"
-                        Grid.Row="0"
-                        BorderBrush="DarkGray"
-                        BorderThickness="1"
-                        />
 
-                    <TextBox
+                    <TextBox x:Name="tb_Name"
                         Grid.Row="0"
                         Width="150"
                         HorizontalAlignment="Left"
@@ -40,7 +36,7 @@
                         Text="Name"
                         Margin="10,10,0,10"
                         />
-                    <TextBox
+                    <TextBox x:Name="tb_Description"
                         Grid.Row="0"
                         Width="200"
                         HorizontalAlignment="Left"
@@ -50,7 +46,7 @@
                         Text="Beschreibung"
                         Margin="170,10,0,10"/>
 
-                    <TextBox
+                    <TextBox x:Name="tb_Amount"
                         Grid.Row="0"
                         Width="60"
                         HorizontalAlignment="Left"
@@ -67,8 +63,7 @@
                         Height="25"
                         HorizontalAlignment="Left"
                         Margin="10"
-                        IsEditable="True"
-                        
+                        IsEditable="True"  
                         />
 
                     <Button
@@ -86,27 +81,143 @@
                         FontSize="16"
                         Margin="260,10,10,10"                        
                         />
-                    <Button
+                    <Button x:Name="bt_AddItem"
                         Grid.Row="1"
                         Width="60"
                         HorizontalAlignment="Left"
                         FontSize="16"
                         Margin="380,10,0,10"
                         Content="Add"
+                        Background="LightGreen"
+                        
+                        />
+
+                    <Rectangle
+                        Width="1"
+                        Height="100"
+                        Grid.Column="0"
+                        Grid.Row="0"
+                        HorizontalAlignment="Right"
+                        Grid.RowSpan="2"
+                        Fill="{DynamicResource {x:Static SystemColors.InfoTextBrushKey}}"
+                        />
+                    <TextBox
+                        Grid.Column="1"
+                        Text="Suchen"
+                        FontSize="16"
+                        HorizontalAlignment="Left"
+                        Margin="10"
+                        Width="200"
+                        VerticalContentAlignment="Center"
+                        />
+                    <ComboBox
+                        Grid.Column="1"
+                        Grid.Row ="1"
+                        Margin="10"
+                        Width="200"
+                        HorizontalAlignment="Left"
+                        />
+
+                    <Label
+                        Grid.Column="1"
+                        Content="Total"
+                        FontSize="16"
+                        Margin="10"
+                        HorizontalAlignment="Right"
+                        />
+
+                    <Label
+                        Grid.Column="1"
+                        Grid.Row="1"
+                        Content="--"
+                        FontSize="16"
+                        Margin="10,10,20,10"
+                        HorizontalAlignment="Right"
+                        HorizontalContentAlignment="Center"
+                        />
+
+                    <Rectangle
+                        Width="1"
+                        Height="100"
+                        Grid.Column="1"
+                        Margin="10,0,0,0"
+                        Grid.Row="0"
+                        HorizontalAlignment="Right"
+                        Grid.RowSpan="2"
+                        Fill="{DynamicResource {x:Static SystemColors.InfoTextBrushKey}}"
+                        />
+
+                    <Rectangle
+                        Width="1"
+                        Height="100"
+                        Grid.Column="2"
+                        Margin="10,0,0,0"
+                        Grid.Row="0"
+                        HorizontalAlignment="Right"
+                        Grid.RowSpan="2"
+                        Fill="{DynamicResource {x:Static SystemColors.InfoTextBrushKey}}"
+                        />
+
+                    <Label
+                        Grid.Row ="0"
+                        Grid.Column="2"
+                        Content="Tage"
+                        FontSize="16"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        />
+
+                    <TextBox
+                        Grid.Row="1"
+                        Grid.Column="2"
+                        Text="15"
+                        FontSize="16"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Width="50"
+                        VerticalContentAlignment="Center"
+                        HorizontalContentAlignment="Right"
+                        />
+
+                    <Button
+                        x:Name="bt_Save"
+                        Grid.Row="0"
+                        Grid.Column="3"
+                        Margin="10"
+                        Width="80"
+                        HorizontalAlignment="Left"
+                        Content="Speichern"
+                        FontSize="16"
+                        Background="LightGreen" Click="bt_Save_Click"
+                        />
+
+                    <Button
+                        x:Name="bt_Export"
+                        Grid.Row="1"
+                        Grid.Column="3"
+                        Margin="10"
+                        Width="80"
+                        HorizontalAlignment="Left"
+                        Content="Export"
+                        FontSize="16"
                         />
 
 
+
                 </Grid>
+
             </GroupBox>
         </StackPanel>
+
+
         <DataGrid
-            Grid.Row="1"
             x:Name="DataGrid"
             CanUserAddRows="False"
             CanUserDeleteRows="False"
             ColumnWidth="*"
-            FontSize="16" Margin="0,10,0,0"
+            FontSize="16" Margin="0,117,0,0" Grid.RowSpan="2"
             />
+        <CheckBox Content="CheckBox" HorizontalAlignment="Left" Margin="976,-146,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>

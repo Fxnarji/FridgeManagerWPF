@@ -34,7 +34,7 @@ namespace FridgeManagerWPF
             DataGrid.AutoGenerateColumns = true;
             DataGrid.ItemsSource = groceries;
             //GenerateColumns();
-
+            GroceryManager.Load(fridge, ref groceries);
         }
 
         private void GenerateColumns()
@@ -46,36 +46,11 @@ namespace FridgeManagerWPF
             DataGrid.Columns.Add(new DataGridTextColumn { Header = "Expiration", Binding = new Binding("Expiration") });
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            GroceryManager.addRandomItem(10, ref groceries);
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void bt_Save_Click(object sender, RoutedEventArgs e)
         {
             GroceryManager.Save(fridge, groceries);
         }
 
-        private void Button_Click_2(object sender, RoutedEventArgs e)
-        {
-            GroceryManager.Clear(ref groceries);
-        }
 
-        private void Button_Click_3(object sender, RoutedEventArgs e)
-        {
-            GroceryManager.Load(fridge, ref groceries);
-        }
-
-        private void Button_Click_4(object sender, RoutedEventArgs e)
-        {
-            string test = "";
-
-            foreach (var item in groceries)
-            {
-                test += item.Name + "\n";
-            }
-
-            MessageBox.Show(test);
-        }
     }
 }
