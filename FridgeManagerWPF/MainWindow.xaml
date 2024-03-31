@@ -7,12 +7,106 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <DataGrid x:Name="DataGrid" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,102,0,0" FontSize="16"/>
-        <Button x:Name="SaveButton" Content="Generate Random" HorizontalAlignment="Left" Margin="34,24,0,0" VerticalAlignment="Top" Height="55" Width="92" Click="Button_Click" FontSize="16"/>
-        <Button Content="Save" HorizontalAlignment="Left" Margin="161,59,0,0" VerticalAlignment="Top" Click="Button_Click_1" FontSize="16"/>
-        <Button Content="Clear" HorizontalAlignment="Left" Margin="248,59,0,0" VerticalAlignment="Top" Click="Button_Click_2" FontSize="16"/>
-        <Button Content="Load" HorizontalAlignment="Left" Margin="204,59,0,0" VerticalAlignment="Top" Click="Button_Click_3" FontSize="16"/>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="386,59,0,0" VerticalAlignment="Top" Click="Button_Click_4" /FontSize="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="101*"/>
+            <RowDefinition Height="333*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel>
+            <GroupBox>
+                <Grid Margin="0,10,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="450"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Border
+                        Grid.Column="0"
+                        Grid.Row="0"
+                        BorderBrush="DarkGray"
+                        BorderThickness="1"
+                        />
+
+                    <TextBox
+                        Grid.Row="0"
+                        Width="150"
+                        HorizontalAlignment="Left"
+                        Height="25"
+                        FontSize="16"
+                        VerticalContentAlignment="Center"
+                        Text="Name"
+                        Margin="10,10,0,10"
+                        />
+                    <TextBox
+                        Grid.Row="0"
+                        Width="200"
+                        HorizontalAlignment="Left"
+                        Height="25"
+                        FontSize="16"
+                        VerticalContentAlignment="Center"
+                        Text="Beschreibung"
+                        Margin="170,10,0,10"/>
+
+                    <TextBox
+                        Grid.Row="0"
+                        Width="60"
+                        HorizontalAlignment="Left"
+                        Height="25"
+                        FontSize="16"
+                        VerticalContentAlignment="Center"
+                        HorizontalContentAlignment="Center"
+                        Text="Menge"
+                        Margin="380,10,0,10"/>
+
+                    <ComboBox
+                        Grid.Row="1"
+                        Width="200"
+                        Height="25"
+                        HorizontalAlignment="Left"
+                        Margin="10"
+                        IsEditable="True"
+                        
+                        />
+
+                    <Button
+                        Grid.Row="1"
+                        Width="30"
+                        HorizontalAlignment="Left"
+                        FontSize="16"
+                        Margin="220,10,10,10"
+                        />
+
+                    <DatePicker
+                        Grid.Row="1"
+                        Width="110"
+                        HorizontalAlignment="Left"
+                        FontSize="16"
+                        Margin="260,10,10,10"                        
+                        />
+                    <Button
+                        Grid.Row="1"
+                        Width="60"
+                        HorizontalAlignment="Left"
+                        FontSize="16"
+                        Margin="380,10,0,10"
+                        Content="Add"
+                        />
+
+
+                </Grid>
+            </GroupBox>
+        </StackPanel>
+        <DataGrid
+            Grid.Row="1"
+            x:Name="DataGrid"
+            CanUserAddRows="False"
+            CanUserDeleteRows="False"
+            ColumnWidth="*"
+            FontSize="16" Margin="0,10,0,0"
+            />
 
     </Grid>
 </Window>

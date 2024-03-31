@@ -77,11 +77,5 @@ namespace FridgeManagerWPF
 
             MessageBox.Show(test);
         }
-
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            float output;
-            if (float.TryParse(TextBox.TextProperty)) ;
-        }
     }
 }
