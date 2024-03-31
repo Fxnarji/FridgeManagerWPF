@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FridgeManagerWPF.Modules;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -11,7 +12,11 @@ namespace FridgeManagerWPF
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
+    /// 
+
+
     public partial class App : Application
     {
+
     }
 }

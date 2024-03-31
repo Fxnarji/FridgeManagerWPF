@@ -7,6 +7,12 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <DataGrid x:Name="DataGrid" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,102,0,0" FontSize="16"/>
+        <Button x:Name="SaveButton" Content="Generate Random" HorizontalAlignment="Left" Margin="34,24,0,0" VerticalAlignment="Top" Height="55" Width="92" Click="Button_Click" FontSize="16"/>
+        <Button Content="Save" HorizontalAlignment="Left" Margin="161,59,0,0" VerticalAlignment="Top" Click="Button_Click_1" FontSize="16"/>
+        <Button Content="Clear" HorizontalAlignment="Left" Margin="248,59,0,0" VerticalAlignment="Top" Click="Button_Click_2" FontSize="16"/>
+        <Button Content="Load" HorizontalAlignment="Left" Margin="204,59,0,0" VerticalAlignment="Top" Click="Button_Click_3" FontSize="16"/>
+        <Button Content="Button" HorizontalAlignment="Left" Margin="386,59,0,0" VerticalAlignment="Top" Click="Button_Click_4" /FontSize="16">
 
     </Grid>
 </Window>
