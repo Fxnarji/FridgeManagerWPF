@@ -1,223 +1,301 @@
-﻿<Window x:Class="FridgeManagerWPF.MainWindow"
+﻿    <Window x:Class="FridgeManagerWPF.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FridgeManagerWPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="800" Width="940" MinWidth="940">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="101*"/>
-            <RowDefinition Height="333*"/>
-        </Grid.RowDefinitions>
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        Title="MainWindow" Height="800" Width="1000" MinWidth="1000">
+    <DockPanel>
 
-        <StackPanel>
-            <GroupBox>
+        <Grid
+            DockPanel.Dock="Top">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="6*"/>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1.5*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Top 0 -->                
+            <Border
+                BorderThickness="1,1,1,0"
+                BorderBrush="DarkGray"
+                Margin="5,5,5,0"
+                >
                 <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="455"/>
-                        <ColumnDefinition Width="280"/>
-                        <ColumnDefinition Width="80"/>
-                        <ColumnDefinition Width="200"/>
-                    </Grid.ColumnDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="4*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-                    <TextBox x:Name="tb_Name"
-                        Grid.Row="0"
-                        Width="150"
-                        HorizontalAlignment="Left"
-                        Height="25"
-                        FontSize="16"
-                        VerticalContentAlignment="Center"
-                        Text="Name"
-                        Margin="10,10,0,10"
-                        />
-                    <TextBox x:Name="tb_Description"
-                        Grid.Row="0"
-                        Width="200"
-                        HorizontalAlignment="Left"
-                        Height="25"
-                        FontSize="16"
-                        VerticalContentAlignment="Center"
-                        Text="Beschreibung"
-                        Margin="170,10,0,10"/>
+                <xctk:WatermarkTextBox
+                    Margin="5"
+                    x:Name="tb_Name"
+                    Grid.Column="0"
+                    FontSize="16"
+                    VerticalContentAlignment="Center"
+                    HorizontalAlignment="Stretch"
+                    Watermark="Name"
+                    />
 
-                    <TextBox x:Name="tb_Amount"
-                        Grid.Row="0"
-                        Width="60"
-                        HorizontalAlignment="Left"
-                        Height="25"
-                        FontSize="16"
-                        VerticalContentAlignment="Center"
-                        HorizontalContentAlignment="Center"
-                        Text="Menge"
-                        Margin="380,10,0,10"/>
+                <xctk:WatermarkTextBox
+                    Margin="5"
+                    Grid.Column="1"
+                    x:Name="tb_Description"
+                    HorizontalAlignment="Stretch"
+                    FontSize="16"
+                    VerticalContentAlignment="Center"
+                    Watermark="Beschreibung"                    
+                    />
 
-                    <ComboBox
-                        Grid.Row="1"
-                        Width="200"
-                        Height="25"
-                        HorizontalAlignment="Left"
-                        Margin="10"
-                        IsEditable="True"  
-                        />
-
-                    <Button
-                        Grid.Row="1"
-                        Width="30"
-                        HorizontalAlignment="Left"
-                        FontSize="16"
-                        Margin="220,10,10,10"
-                        />
-
-                    <DatePicker
-                        Grid.Row="1"
-                        Width="110"
-                        HorizontalAlignment="Left"
-                        FontSize="16"
-                        Margin="260,10,10,10"                        
-                        />
-                    <Button x:Name="bt_AddItem"
-                        Grid.Row="1"
-                        Width="60"
-                        HorizontalAlignment="Left"
-                        FontSize="16"
-                        Margin="380,10,0,10"
-                        Content="Add"
-                        Background="LightGreen"
-                        
-                        />
-
-                    <Rectangle
-                        Width="1"
-                        Height="100"
-                        Grid.Column="0"
-                        Grid.Row="0"
-                        HorizontalAlignment="Right"
-                        Grid.RowSpan="2"
-                        Fill="{DynamicResource {x:Static SystemColors.InfoTextBrushKey}}"
-                        />
-                    <TextBox
-                        Grid.Column="1"
-                        Text="Suchen"
-                        FontSize="16"
-                        HorizontalAlignment="Left"
-                        Margin="10"
-                        Width="200"
-                        VerticalContentAlignment="Center"
-                        />
-                    <ComboBox
-                        Grid.Column="1"
-                        Grid.Row ="1"
-                        Margin="10"
-                        Width="200"
-                        HorizontalAlignment="Left"
-                        />
-
-                    <Label
-                        Grid.Column="1"
-                        Content="Total"
-                        FontSize="16"
-                        Margin="10"
-                        HorizontalAlignment="Right"
-                        />
-
-                    <Label
-                        Grid.Column="1"
-                        Grid.Row="1"
-                        Content="--"
-                        FontSize="16"
-                        Margin="10,10,20,10"
-                        HorizontalAlignment="Right"
-                        HorizontalContentAlignment="Center"
-                        />
-
-                    <Rectangle
-                        Width="1"
-                        Height="100"
-                        Grid.Column="1"
-                        Margin="10,0,0,0"
-                        Grid.Row="0"
-                        HorizontalAlignment="Right"
-                        Grid.RowSpan="2"
-                        Fill="{DynamicResource {x:Static SystemColors.InfoTextBrushKey}}"
-                        />
-
-                    <Rectangle
-                        Width="1"
-                        Height="100"
-                        Grid.Column="2"
-                        Margin="10,0,0,0"
-                        Grid.Row="0"
-                        HorizontalAlignment="Right"
-                        Grid.RowSpan="2"
-                        Fill="{DynamicResource {x:Static SystemColors.InfoTextBrushKey}}"
-                        />
-
-                    <Label
-                        Grid.Row ="0"
-                        Grid.Column="2"
-                        Content="Tage"
-                        FontSize="16"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        />
-
-                    <TextBox
-                        Grid.Row="1"
-                        Grid.Column="2"
-                        Text="15"
-                        FontSize="16"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Width="50"
-                        VerticalContentAlignment="Center"
-                        HorizontalContentAlignment="Right"
-                        />
-
-                    <Button
-                        x:Name="bt_Save"
-                        Grid.Row="0"
-                        Grid.Column="3"
-                        Margin="10"
-                        Width="80"
-                        HorizontalAlignment="Left"
-                        Content="Speichern"
-                        FontSize="16"
-                        Background="LightGreen" Click="bt_Save_Click"
-                        />
-
-                    <Button
-                        x:Name="bt_Export"
-                        Grid.Row="1"
-                        Grid.Column="3"
-                        Margin="10"
-                        Width="80"
-                        HorizontalAlignment="Left"
-                        Content="Export"
-                        FontSize="16"
-                        />
-
-
-
+                    <xctk:WatermarkTextBox 
+                    Margin="5"
+                    x:Name="tb_Amount"
+                    Grid.Column="2"
+                    HorizontalAlignment="Stretch"
+                    FontSize="16"
+                    VerticalContentAlignment="Center"
+                    HorizontalContentAlignment="Center"
+                    Watermark="Menge"
+                    />
                 </Grid>
+            </Border>
 
-            </GroupBox>
-        </StackPanel>
 
+            <!-- Bottom 0-->
+            <Border
+                BorderThickness="1,0,1,1"
+                BorderBrush="DarkGray"
+                Grid.Row="1"
+                Margin="5,0,5,5"
+                >
+                <Grid
+                Grid.Row="1"
+                Grid.Column="0"
+                >
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="7*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="6*"/>
+                    <ColumnDefinition Width="4*"/>
+                </Grid.ColumnDefinitions>
+
+                <ComboBox
+                    Margin="5"
+                    Grid.Column="0"
+                    IsEditable="True"
+                    FontSize="16"
+                    VerticalContentAlignment="Center"
+                    x:Name="cb_CategoryAdd"
+                    />
+
+                <Button
+                    x:Name="bt_AddCategory"
+                    Margin="5"
+                    Grid.Column="1"
+                    FontSize="16" Click="bt_AddCategory_Click"
+                    />
+
+                <Button
+                    x:Name="bt_RemCategory"
+                    Margin="5"
+                    Grid.Column="1"
+                    FontSize="16" Click="bt_AddCategory_Click"
+                    Visibility="Collapsed"
+                    />
+
+                    <xctk:DateTimePicker
+                    x:Name="dtp_Expiration"
+                    Margin="5"
+                    Grid.Column="2"
+                    FontSize="16"
+                    Watermark="Datum"
+                    HorizontalContentAlignment="Left"
+                    Format="ShortDate"
+                    />
+                    
+                <Button 
+                    x:Name="bt_AddItem"
+                    Margin="5"
+                    Grid.Column="3"
+                    FontSize="16"
+                    Content="Add"
+                    Background="LightGreen"
+                    Click="bt_AddItem_Click"
+                    />
+
+            </Grid>
+            </Border>
+
+            <!-- Top 1-->
+            <Border
+                BorderThickness="1,1,1,0"
+                BorderBrush="DarkGray"
+                Grid.Column="1"
+                Margin="5,5,5,0"
+                >
+                <Grid
+                Grid.Row="0"
+                Grid.Column="1"
+                >
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5.5*"/>
+                    <ColumnDefinition Width="1.5*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <xctk:WatermarkTextBox
+                    Margin="5"
+                    Grid.Column="0"
+                    Watermark="Suchen"
+                    FontSize="16"
+                    VerticalContentAlignment="Center"
+                    />
+
+                    <Button
+                        x:Name="bt_openSearch"
+                        Grid.Column="1"
+                        Margin="5"
+                        />
+                    <Button
+                        x:Name="bt_closeSearch"
+                        Grid.Column="1"
+                        Margin="5"
+                        Visibility="Collapsed"
+                        />
+
+                    <Label
+                    Margin="5"
+                    Grid.Column="2"
+                    Content="Total"
+                    FontSize="16"
+                    HorizontalContentAlignment="Center"
+                    />
+
+            </Grid>
+            </Border>
+
+
+            <!-- Bottom 1-->
+            <Border
+                BorderThickness="1,0,1,1"
+                BorderBrush="DarkGray"
+                Grid.Column="1"
+                Grid.Row="1"
+                Margin="5,0,5,5"
+                >
+                <Grid
+                Grid.Row="1"
+                Grid.Column="1"
+                >
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="8*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+
+                <ComboBox
+                    x:Name="cb_SearchCategories"
+                    Margin="5"
+                    Grid.Column="0"
+                    Grid.Row ="1"
+                    FontSize="16"
+                    VerticalContentAlignment="Center"
+                    />
+
+
+
+                <Label
+                    Grid.Column="1"
+                    Content="--"
+                    FontSize="16"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    Margin="5"
+                    />
+
+
+            </Grid>
+            </Border>
+            
+
+            <!-- Both 2-->
+            <Border
+                Grid.Column="2"
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                BorderBrush="DarkGray"
+                BorderThickness="1"
+                Margin="5"
+                >
+            </Border>
+
+            <Label
+                Grid.Row ="0"
+                Grid.Column="2"
+                Content="Tage"
+                Margin="10"
+                FontSize="16"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                />
+
+            <TextBox
+                Margin="10"
+                Grid.Row="1"
+                Grid.Column="2"
+                Text="15"
+                FontSize="16"
+                VerticalContentAlignment="Center"
+                HorizontalContentAlignment="Right"
+                />
+            
+            
+            <!-- Bottom 2-->
+            <Border
+                Grid.Column="3"
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                BorderBrush="DarkGray"
+                BorderThickness="1"
+                Margin="5"
+                >
+            </Border>
+
+            <Button
+                x:Name="bt_Save"
+                Margin="10"
+                Grid.Row="0"
+                Grid.Column="3"
+                Content="Speichern"
+                FontSize="16"
+                Background="LightGreen" Click="bt_Save_Click"
+                />
+
+            <Button
+                Margin="10"
+                x:Name="bt_Export"
+                Grid.Row="1"
+                Grid.Column="3"
+                Content="Export"
+                FontSize="16"
+                />
+        </Grid>
 
         <DataGrid
             x:Name="DataGrid"
             CanUserAddRows="False"
             CanUserDeleteRows="False"
             ColumnWidth="*"
-            FontSize="16" Margin="0,117,0,0" Grid.RowSpan="2"
+            FontSize="16"
             />
-        <CheckBox Content="CheckBox" HorizontalAlignment="Left" Margin="976,-146,0,0" VerticalAlignment="Top"/>
-
-    </Grid>
+    </DockPanel>
 </Window>

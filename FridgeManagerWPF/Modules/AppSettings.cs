@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace FridgeManagerWPF.Modules
 {
     public class AppSettings
     {
         public int maxDays;
-        public List<string> categories = new List<string>();
+        public List<string> categories { get; set; } = new List<string>();
+        public List<string> searchSpecific { get; set; } = new List<string>();
+
 
     }
 }

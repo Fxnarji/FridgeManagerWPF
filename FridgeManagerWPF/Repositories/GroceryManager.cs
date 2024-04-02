@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -14,9 +15,22 @@ namespace FridgeManagerWPF.Repositories
 {
     public class GroceryManager
     {
-        public static void addItem (GroceryItem item, ref ObservableCollection<GroceryItem> list)
+        public static GroceryItem? create(string name, string amount, string desc, string cat, DateTime? date)
         {
-            list.Add(item);
+            if (!float.TryParse(amount, out float amount_f))
+            {
+                MessageBox.Show("ERORR YOU PUT WRONG STUFF I MURDER UR FAMILY");
+                return null;
+            }
+
+            DateTime nn_date;
+            if (date.HasValue)
+                nn_date = date.Value;
+            else
+                return null;
+
+            return new GroceryItem(name, amount_f, desc, cat, nn_date);
+
         }
 
         public static void addRandomItem(int amount, ref ObservableCollection<GroceryItem> list)
