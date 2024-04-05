@@ -84,24 +84,21 @@ namespace FridgeManagerWPF.Repositories
                 XmlSerializer serializer = new XmlSerializer(typeof(List<GroceryItem>));
 
                 // Convert ObservableCollection to List
-                List<GroceryItem> itemList = new List<GroceryItem>();
-                foreach (var item in list)
-                {
-                    itemList.Add(item);
-                }
+                List<GroceryItem> itemList = new List<GroceryItem>(list);
 
-                // Open the file with FileMode.Create to create a new file if it doesn't exist
-                // Use FileMode.Append to append data to an existing file or create a new file
-                using (StreamWriter writer = new StreamWriter(filePath)) // Specify FileMode.Append
+                // Open the file with FileMode.Append to append data to an existing file or create a new file
+                using (StreamWriter writer = new StreamWriter(filePath, true)) // Use FileMode.Append
                 {
                     serializer.Serialize(writer, itemList);
                 }
             }
             catch (Exception ex)
             {
+                // Log the exception or handle it more gracefully
                 MessageBox.Show($"Error saving groceries: {ex.Message}");
             }
         }
+
 
         public static void Load(string filePath, ref ObservableCollection<GroceryItem> loadedGroceries)
         {

@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
+using Xceed.Wpf.Toolkit.Core.Converters;
 using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
 namespace FridgeManagerWPF
@@ -22,22 +23,23 @@ namespace FridgeManagerWPF
         private ObservableCollection<GroceryItem> search = new ObservableCollection<GroceryItem>();
         private string fridge = "data/Fridge.xml";
         AppSettings settings;
+        SerializableColor yellow = new SerializableColor(Colors.Yellow);
+        SerializableColor red= new SerializableColor(Colors.Red);
 
         public MainWindow()
         {
             InitializeComponent();
 
-            //data grid shit
-            DataGrid.ItemsSource = groceries;
-
             //loading shit
             GroceryManager.Load(fridge, ref groceries);
+
+            //data grid shit
+            DataGrid.ItemsSource = groceries;
             loadSettings();
+            setRowColors(15, yellow);
 
             //specific shit
             dtp_Expiration.PreviewTextInput += DateTimePicker_PreviewTextInput;
-            addRandom(100);
-            changeColor(12, Colors.Red);
         }
 
 
@@ -52,6 +54,10 @@ namespace FridgeManagerWPF
 
         private void bt_AddItem_Click(object sender, RoutedEventArgs e)
         {
+            if(string.IsNullOrEmpty(tb_Name.Text) || string.IsNullOrEmpty(tb_Amount.Text) || dtp_Expiration.Value == null)
+            {
+                return;
+            }
 
             GroceryItem item = GroceryManager.create(tb_Name.Text, tb_Amount.Text, tb_Description.Text, cb_CategoryAdd.SelectedItem.ToString(), dtp_Expiration.Value);
 
@@ -76,6 +82,8 @@ namespace FridgeManagerWPF
 
             cb_CategoryAdd.Items.Add(cb_CategoryAdd.Text);
             cb_CategoryAdd.Text = string.Empty;
+
+
         }
 
         #endregion
@@ -88,16 +96,22 @@ namespace FridgeManagerWPF
         {
             settings = Settings.LoadSettings();
 
+
+            //set categories
             foreach(string category in settings.categories)
             {
                 cb_CategoryAdd.Items.Add (category);
                 cb_SearchCategories.Items.Add(category);
             }
 
+            //set search categories
             foreach(string category in settings.searchSpecific)
             {
                 cb_SearchCategories.Items.Add(category);
             }
+
+            //set maxDays
+            tb_Days.Text = settings.maxDays.ToString();
         }
 
         private void addCategory(string category)
@@ -106,28 +120,6 @@ namespace FridgeManagerWPF
             {
                 settings.categories.Add(category);
                 Settings.save(settings);
-            }
-        }
-
-        private void changeColor(int days, Color color)
-        {
-            foreach (var item in DataGrid.Items)
-            {
-                if (item is GroceryItem)
-                {
-                    var dateTimeProperty = ((GroceryItem)item).Expiration;
-                    if (dateTimeProperty != null)
-                    {
-                        if ((DateTime.Now - dateTimeProperty).Days <= days)
-                        {
-                            DataGridRow row = (DataGridRow)DataGrid.ItemContainerGenerator.ContainerFromItem(item);
-                            if (row != null)
-                            {
-                                row.Background = new SolidColorBrush(color);
-                            }
-                        }
-                    }
-                }
             }
         }
 
@@ -165,7 +157,25 @@ namespace FridgeManagerWPF
             }
         }
 
+        private void setRowColors(int days, SerializableColor color)
+        {
+            foreach(GroceryItem item in groceries)
+            {
+                TimeSpan difference = item.Expiration - DateTime.Now;
+
+                if(difference.Days <= days && difference.Days > 0)
+                {
+                    item.RowColor = color;
+                }
+            }
+            DataGrid.Items.Refresh();
+        }
+
         #endregion
 
+        private void tb_Days_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            
+        }
     }
 }

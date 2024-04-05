@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Windows.Media;
 
 namespace FridgeManagerWPF.Modules
 {
@@ -10,6 +10,19 @@ namespace FridgeManagerWPF.Modules
         public string Description { get; set; }
         public string Category { get; set; }
         public DateTime Expiration { get; set; }
+        public SerializableColor RowColor { get; set; }
+
+
+
+        public GroceryItem(string Name, float Amount, string Description, string Category, DateTime Expiration, Color Color)
+        {
+            this.Name = Name;
+            this.Amount = Amount;
+            this.Description = Description;
+            this.Category = Category;
+            this.Expiration = Expiration;
+            RowColor = new SerializableColor(Color);
+        }
 
         public GroceryItem(string Name, float Amount, string Description, string Category, DateTime Expiration)
         {
@@ -18,11 +31,13 @@ namespace FridgeManagerWPF.Modules
             this.Description = Description;
             this.Category = Category;
             this.Expiration = Expiration;
+            RowColor = new SerializableColor();
         }
 
         public GroceryItem()
         {
-
+            RowColor = new SerializableColor();
         }
     }
+
 }

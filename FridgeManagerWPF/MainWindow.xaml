@@ -249,13 +249,14 @@
                 />
 
             <TextBox
+                x:Name="tb_Days"
                 Margin="10"
                 Grid.Row="1"
                 Grid.Column="2"
                 Text="15"
                 FontSize="16"
                 VerticalContentAlignment="Center"
-                HorizontalContentAlignment="Right"
+                HorizontalContentAlignment="Right" TextChanged="tb_Days_TextChanged"
                 />
             
             
@@ -296,6 +297,12 @@
             CanUserDeleteRows="False"
             ColumnWidth="*"
             FontSize="16"
-            />
+            >
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Setter Property="Background" Value="{Binding RowColor}" />
+                </Style>
+            </DataGrid.RowStyle>
+        </DataGrid>
     </DockPanel>
 </Window>
