@@ -23,8 +23,6 @@ namespace FridgeManagerWPF
         private ObservableCollection<GroceryItem> search = new ObservableCollection<GroceryItem>();
         private string fridge = "data/Fridge.xml";
         AppSettings settings;
-        SerializableColor yellow = new SerializableColor(Colors.Yellow);
-        SerializableColor red= new SerializableColor(Colors.Red);
 
         public MainWindow()
         {
@@ -36,7 +34,6 @@ namespace FridgeManagerWPF
             //data grid shit
             DataGrid.ItemsSource = groceries;
             loadSettings();
-            setRowColors(15, yellow);
 
             //specific shit
             dtp_Expiration.PreviewTextInput += DateTimePicker_PreviewTextInput;
@@ -157,19 +154,6 @@ namespace FridgeManagerWPF
             }
         }
 
-        private void setRowColors(int days, SerializableColor color)
-        {
-            foreach(GroceryItem item in groceries)
-            {
-                TimeSpan difference = item.Expiration - DateTime.Now;
-
-                if(difference.Days <= days && difference.Days > 0)
-                {
-                    item.RowColor = color;
-                }
-            }
-            DataGrid.Items.Refresh();
-        }
 
         #endregion
 
