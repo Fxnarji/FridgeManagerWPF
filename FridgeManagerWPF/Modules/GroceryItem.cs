@@ -10,7 +10,6 @@ namespace FridgeManagerWPF.Modules
         public string Description { get; set; }
         public string Category { get; set; }
         public DateTime Expiration { get; set; }
-        public SerializableColor RowColor { get; set; }
 
 
 
@@ -21,7 +20,6 @@ namespace FridgeManagerWPF.Modules
             this.Description = Description;
             this.Category = Category;
             this.Expiration = Expiration;
-            RowColor = new SerializableColor(Color);
         }
 
         public GroceryItem(string Name, float Amount, string Description, string Category, DateTime Expiration)
@@ -31,12 +29,11 @@ namespace FridgeManagerWPF.Modules
             this.Description = Description;
             this.Category = Category;
             this.Expiration = Expiration;
-            RowColor = new SerializableColor();
         }
 
         public GroceryItem()
         {
-            RowColor = new SerializableColor();
+
         }
     }
 
