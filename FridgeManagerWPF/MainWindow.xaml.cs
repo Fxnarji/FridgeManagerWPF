@@ -5,48 +5,47 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Media;
-using Xceed.Wpf.Toolkit.Core.Converters;
-using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
+using System.Windows.Input;
+using System.Windows.Interop;
 
 namespace FridgeManagerWPF
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// 
-    /// 
-    /// 
-    /// </summary>
     public partial class MainWindow : Window
     {
-        private ObservableCollection<GroceryItem> groceries = new ObservableCollection<GroceryItem>();
-        private ObservableCollection<GroceryItem> search = new ObservableCollection<GroceryItem>();
-        private string fridge = "data/Fridge.xml";
-        AppSettings settings;
+        private readonly ObservableCollection<GroceryItem> _groceries = new ObservableCollection<GroceryItem>();
+        private ObservableCollection<GroceryItem> _search = new ObservableCollection<GroceryItem>();
+        private readonly string _fridge = "data/Fridge.xml";
+        AppSettings _settings;
+        public ICommand DeleteCommand { get; }
+        public ICommand EditCommand { get; }
+
+
 
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = this;
 
             //loading shit
-            GroceryManager.Load(fridge, ref groceries);
+            GroceryManager.Load(_fridge, ref _groceries);
 
             //data grid shit
-            DataGrid.ItemsSource = groceries;
-            loadSettings();
+            DataGrid.ItemsSource = _groceries;
+            LoadSettings();
 
             //specific shit
             dtp_Expiration.PreviewTextInput += DateTimePicker_PreviewTextInput;
+
+            DeleteCommand = new RelayCommand<GroceryItem>(DeleteItem);
+            EditCommand = new RelayCommand<GroceryItem>(EditItem);
         }
-
-
         
 
         #region buttons
 
         private void bt_Save_Click(object sender, RoutedEventArgs e)
         {
-            GroceryManager.Save(fridge, groceries);
+            GroceryManager.Save(_fridge, _groceries);
         }
 
         private void bt_AddItem_Click(object sender, RoutedEventArgs e)
@@ -56,11 +55,11 @@ namespace FridgeManagerWPF
                 return;
             }
 
-            GroceryItem item = GroceryManager.create(tb_Name.Text, tb_Amount.Text, tb_Description.Text, cb_CategoryAdd.SelectedItem.ToString(), dtp_Expiration.Value);
+            GroceryItem item = GroceryManager.Create(tb_Name.Text, tb_Amount.Text, tb_Description.Text, cb_CategoryAdd.SelectedItem.ToString(), dtp_Expiration.Value);
 
             if(item != null )
             {
-                groceries.Add(item);
+                _groceries.Add(item);
             }
             else
             {
@@ -75,7 +74,7 @@ namespace FridgeManagerWPF
                 MessageBox.Show("Not a valid text");
             }
 
-            addCategory(cb_CategoryAdd.Text);
+            AddCategory(cb_CategoryAdd.Text);
 
             cb_CategoryAdd.Items.Add(cb_CategoryAdd.Text);
             cb_CategoryAdd.Text = string.Empty;
@@ -84,39 +83,37 @@ namespace FridgeManagerWPF
         }
 
         #endregion
-
-
-
+        
         #region functionality
 
-        private void loadSettings()
+        private void LoadSettings()
         {
-            settings = Settings.LoadSettings();
+            _settings = Settings.LoadSettings();
 
 
             //set categories
-            foreach(string category in settings.categories)
+            foreach(string category in _settings.categories)
             {
                 cb_CategoryAdd.Items.Add (category);
                 cb_SearchCategories.Items.Add(category);
             }
 
             //set search categories
-            foreach(string category in settings.searchSpecific)
+            foreach(string category in _settings.searchSpecific)
             {
                 cb_SearchCategories.Items.Add(category);
             }
 
             //set maxDays
-            tb_Days.Text = settings.maxDays.ToString();
+            tb_Days.Text = _settings.maxDays.ToString();
         }
 
-        private void addCategory(string category)
+        private void AddCategory(string category)
         {
-            if (!settings.categories.Contains(category))
+            if (!_settings.categories.Contains(category))
             {
-                settings.categories.Add(category);
-                Settings.save(settings);
+                _settings.categories.Add(category);
+                Settings.save(_settings);
             }
         }
 
@@ -129,12 +126,12 @@ namespace FridgeManagerWPF
             DataGrid.Columns.Add(new DataGridTextColumn { Header = "Expiration", Binding = new Binding("Expiration") });
         }
         
-        private void DateTimePicker_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        private static void DateTimePicker_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
         {
             e.Handled = true;
         }
 
-        private void addRandom(int n)
+        private void AddRandom(int n)
         {
             Random rand = new Random();
 
@@ -150,8 +147,22 @@ namespace FridgeManagerWPF
                 string category = categories[rand.Next(categories.Length)];
                 DateTime expiration = DateTime.Now.AddDays(rand.Next(-5, 60)); // Random expiration within 1-30 days from now
 
-                groceries.Add(new GroceryItem(name, amount, description, category, expiration));
+                _groceries.Add(new GroceryItem(name, amount, description, category, expiration));
             }
+        }
+
+
+
+        private void DeleteItem(GroceryItem item)
+        {
+            if(item == null) return;
+            _groceries.Remove(item);
+
+        }
+
+        private void EditItem(GroceryItem item)
+        {
+            MessageBox.Show("Hiii~");
         }
 
 
@@ -160,6 +171,43 @@ namespace FridgeManagerWPF
         private void tb_Days_TextChanged(object sender, TextChangedEventArgs e)
         {
             
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        public GroceryItem CanBeChopped(bool UsingAxe)
+        {
+            throw new NotImplementedException();
         }
     }
 }

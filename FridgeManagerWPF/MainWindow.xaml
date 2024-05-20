@@ -291,13 +291,31 @@
                 />
         </Grid>
 
-        <DataGrid
-            x:Name="DataGrid"
-            CanUserAddRows="False"
-            CanUserDeleteRows="False"
+        <DataGrid 
+            x:Name="DataGrid" 
+            AutoGenerateColumns="False" 
+            ItemsSource="{Binding _groceries}"
+            CanUserAddRows="False" 
+            CanUserDeleteRows="False" 
             ColumnWidth="*"
-            FontSize="16"
-            >
+            FontSize="16">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+                <DataGridTextColumn Header="Amount" Binding="{Binding Amount}" />
+                <DataGridTextColumn Header="Description" Binding="{Binding Description}" />
+                <DataGridTextColumn Header="Category" Binding="{Binding Category}" />
+                <DataGridTextColumn Header="Expiration" Binding="{Binding Expiration}" />
+                <DataGridTemplateColumn Header="Actions" Width="Auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Button Content="Edit" Command="{Binding DataContext.EditCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}"/>
+                                <Button Content="Delete" Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
             <DataGrid.RowStyle>
                 <Style TargetType="DataGridRow">
                     <Setter Property="Background" Value="{Binding RowColor}" />

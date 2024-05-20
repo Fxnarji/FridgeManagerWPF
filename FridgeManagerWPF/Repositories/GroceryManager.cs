@@ -3,19 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Xml.Serialization;
 
 namespace FridgeManagerWPF.Repositories
 {
     public class GroceryManager
     {
-        public static GroceryItem? create(string name, string amount, string desc, string cat, DateTime? date)
+        public static GroceryItem? Create(string name, string amount, string desc, string cat, DateTime? date)
         {
             if (!float.TryParse(amount, out float amount_f))
             {
@@ -33,7 +28,7 @@ namespace FridgeManagerWPF.Repositories
 
         }
 
-        public static void addRandomItem(int amount, ref ObservableCollection<GroceryItem> list)
+        public static void AddRandomItem(int amount, ref ObservableCollection<GroceryItem> list)
         {
             List<string> names = new List<string>
         {
@@ -79,18 +74,19 @@ namespace FridgeManagerWPF.Repositories
 
         public static void Save(string filePath, ObservableCollection<GroceryItem> list)
         {
+            
             try
             {
-                XmlSerializer serializer = new XmlSerializer(typeof(List<GroceryItem>));
+                XmlSerializer serializer = new XmlSerializer(typeof(ObservableCollection<GroceryItem>));
 
-                // Convert ObservableCollection to List
-                List<GroceryItem> itemList = new List<GroceryItem>(list);
+                ObservableCollection<GroceryItem> itemList = new ObservableCollection<GroceryItem>(list);
 
-                // Open the file with FileMode.Append to append data to an existing file or create a new file
-                using (StreamWriter writer = new StreamWriter(filePath, true)) // Use FileMode.Append
+                using (StreamWriter writer = new StreamWriter(filePath, true))
                 {
                     serializer.Serialize(writer, itemList);
                 }
+
+                MessageBox.Show("saved successfully!");
             }
             catch (Exception ex)
             {
@@ -99,27 +95,85 @@ namespace FridgeManagerWPF.Repositories
             }
         }
 
+        public static void SaveCSV(string filePath, ObservableCollection<GroceryItem> list)
+        {
+            try
+            {
+                using (StreamWriter writer = new StreamWriter(filePath, false))
+                {
+                    // Write the header
+                    writer.WriteLine("Name,Quantity,Price");
+
+                    // Write each grocery item
+                    foreach (GroceryItem item in list)
+                    {
+                        writer.WriteLine($"{item.Name},{item.Amount},{item.Description}, {item.Category}, {item.Expiration}");
+                    }
+                }
+
+                MessageBox.Show("Saved successfully!");
+            }
+            catch (Exception ex)
+            {
+                // Log the exception or handle it more gracefully
+                MessageBox.Show($"Error saving groceries: {ex.Message}");
+            }
+        }
 
         public static void Load(string filePath, ref ObservableCollection<GroceryItem> loadedGroceries)
         {
-            loadedGroceries.Clear();
-
             try
             {
-                // Create an XmlSerializer for the GroceryItem type
                 XmlSerializer serializer = new XmlSerializer(typeof(ObservableCollection<GroceryItem>));
 
-                // Check if the file exists
                 if (File.Exists(filePath))
                 {
-                    // Create a StreamReader to read the XML from the file
                     using (StreamReader reader = new StreamReader(filePath))
                     {
-                        // Deserialize the XML into a list of groceries
                         ObservableCollection<GroceryItem> loadedItems = (ObservableCollection<GroceryItem>)serializer.Deserialize(reader);
-                        // Convert the list to ObservableCollection
                         foreach (var item in loadedItems)
                         {
+                            loadedGroceries.Add(item);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle any exceptions, e.g., log or show an error message
+                Console.WriteLine($"Error loading groceries: {ex.Message}");
+            }
+        }
+
+        public static void LoadCSV(string filePath, ref ObservableCollection<GroceryItem> loadedGroceries)
+        {
+            try
+            {
+                if (File.Exists(filePath))
+                {
+                    using (StreamReader reader = new StreamReader(filePath))
+                    {
+                        // Read the header line
+                        reader.ReadLine();
+
+                        // Read each subsequent line
+                        string line;
+                        while ((line = reader.ReadLine()) != null)
+                        {
+                            // Split the line by commas
+                            string[] parts = line.Split(',');
+
+                            // Create a GroceryItem object
+                            GroceryItem item = new GroceryItem
+                            {
+                                Name = parts[0],
+                                Amount = int.Parse(parts[1]),
+                                Description = parts[2],
+                                Category = parts[3],
+                                Expiration = DateTime.Parse(parts[4])
+                            };
+
+                            // Add the item to the collection
                             loadedGroceries.Add(item);
                         }
                     }
